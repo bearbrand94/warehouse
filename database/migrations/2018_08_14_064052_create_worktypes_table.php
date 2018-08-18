@@ -15,6 +15,7 @@ class CreateWorktypesTable extends Migration
     {
         Schema::create('worktypes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('item_id');
             $table->string('name');
             $table->integer('price')->default(0);
             $table->timestamps();
