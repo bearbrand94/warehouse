@@ -14,13 +14,4 @@ class Client extends Model
     protected $fillable = [
         'name', 'address', 'email', 'phone1', 'phone2',
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'created_at', 'updated_at',
-    ];
 }

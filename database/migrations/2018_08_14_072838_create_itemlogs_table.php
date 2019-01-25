@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Itemlog;
 
 class CreateItemlogsTable extends Migration
 {
@@ -15,11 +16,15 @@ class CreateItemlogsTable extends Migration
     {
         Schema::create('itemlogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('item_id');
-            $table->string('worktype_id');
+            $table->integer('item_id')->unsigned();
+            $table->integer('fee_ref_id')->unsigned();
             $table->integer('qty')->default(0)->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            // $table->foreign('item_id')->references('id')->on('items');
+            // $table->foreign('worktype_id')->references('id')->on('worktypes');
         });
     }
 

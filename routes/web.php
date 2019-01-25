@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//item services
+Route::get('/client/item/get', 'ItemService@get_client_item');
+Route::get('/item/detail/get', 'ItemService@get_item_detail');
+Route::post('/item/add', 'ItemService@add_new_item');
+
+Route::get('/item/transactions/get', 'TransactionService@get_item_transaction');
+Route::get('/client/transactions/get', 'TransactionService@get_client_transaction');

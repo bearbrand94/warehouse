@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransactionTable extends Migration
+class CreateSingleFeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateTransactionTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaction', function (Blueprint $table) {
+        Schema::create('single_fees', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client_id');
-            $table->integer('nominal');
+            $table->integer('item_id')->unsigned();
+            $table->string('name');
+            $table->integer('price')->default(0);
             $table->timestamps();
+            $table->softDeletes();
+            // $table->foreign('item_id')->references('id')->on('items');
         });
     }
 
@@ -28,6 +31,6 @@ class CreateTransactionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction');
+        Schema::dropIfExists('single_fees');
     }
 }

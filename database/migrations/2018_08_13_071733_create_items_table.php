@@ -15,11 +15,14 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('client_id');
+            $table->integer('client_id')->unsigned();
             $table->string('name');
-            $table->string('unit_name')->default("Pallete");
+            $table->string('unit_name');
             $table->integer('qty')->default(0);
             $table->timestamps();
+            $table->softDeletes();
+
+            // $table->foreign('client_id')->references('id')->on('clients');
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWorktypesTable extends Migration
+class CreateRecurringFeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateWorktypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('worktypes', function (Blueprint $table) {
+        Schema::create('recurring_fees', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('item_id');
+            $table->integer('item_id')->unsigned();
             $table->string('name');
             $table->integer('price')->default(0);
+            $table->string('recurring_type')->comment("daily/monthly/each date");
+            $table->datetime('recurring_date')->nullable()->comment("if type chosen is each date");
             $table->timestamps();
+            $table->softDeletes();
+            // $table->foreign('item_id')->references('id')->on('items');
         });
     }
 
@@ -29,6 +33,6 @@ class CreateWorktypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('worktypes');
+        Schema::dropIfExists('recurring_fees');
     }
 }
