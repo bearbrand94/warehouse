@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Worktype extends Model
+class Single_fee extends Model
 {
     //
     protected $fillable = [

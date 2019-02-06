@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Item;
+use App\Itemlog;
 
 class ItemObserver
 {
@@ -14,7 +15,7 @@ class ItemObserver
      */
     public function created(Item $item)
     {
-        //
+
     }
 
     /**

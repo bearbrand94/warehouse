@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Itemlog;
 use App\Item;
 use App\Transaction;
-use App\Worktype;
+use App\Single_fee;
 
 class ItemlogObserver
 {
@@ -25,11 +25,11 @@ class ItemlogObserver
 
         //get positive numbers of item logs qty, for transaction purpose.
         $itemlog->qty = abs($itemlog->qty);
-        $worktype = Worktype::find($itemlog->worktype_id);
+        $single_fee = Single_fee::find($itemlog->fee_ref_id);
 
-        $subtotal = $worktype->price * $itemlog->qty;
+        $subtotal = $single_fee->price * $itemlog->qty;
 
-        $note = $worktype->name . " " . $item->name . " " . $itemlog->qty . " " . $item->unit_name;
+        $note = $single_fee->name . " " . $item->name . " " . $itemlog->qty . " " . $item->unit_name;
 
         Transaction::create([
             'item_id' => $item->id,

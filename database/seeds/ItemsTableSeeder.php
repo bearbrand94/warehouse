@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Item;
 use App\Single_fee;
+use App\Recurring_fee;
 use App\Itemlog;
 
 class ItemsTableSeeder extends Seeder
@@ -17,6 +18,7 @@ class ItemsTableSeeder extends Seeder
         //
         Item::truncate();
         Single_fee::truncate();
+        Recurring_fee::truncate();
         Itemlog::truncate();
 
         $faker = \Faker\Factory::create();
@@ -41,7 +43,7 @@ class ItemsTableSeeder extends Seeder
             //penitipan     : storage fee.
 
             //then create the item worktype of unloading item from client(fee)
-            $worktype_in = Single_fee::create([
+            $fee_bongkar = Single_fee::create([
                 'item_id' => $itemdata->id,
                 'name' => "bongkar",
                 'price' => 15000,
@@ -51,13 +53,14 @@ class ItemsTableSeeder extends Seeder
             for ($j = 0; $j < $faker->numberBetween(1,20); $j++) {
                 $itemlog = Itemlog::create([
                     'item_id' => $itemdata->id,
-                    'worktype_id' => $worktype_in->id,
+                    'fee_ref_id' => $fee_bongkar->id,
                     'qty' => $faker->numberBetween(1,10),
+                    'note' => "bongkar"
                 ]);
             }
 
             //create another item worktype of loading item to client(fee)
-            $worktype_out = Single_fee::create([
+            $fee_muat = Single_fee::create([
                 'item_id' => $itemdata->id,
                 'name' => "muat",
                 'price' => 15000,
@@ -65,17 +68,19 @@ class ItemsTableSeeder extends Seeder
 
             //create random itemlog for loading item with random quantity, but no higher than current item qty.
             $item_after_insert = Item::find($itemdata->id);
-                $itemlog = Itemlog::create([
-                    'item_id' => $itemdata->id,
-                    'worktype_id' => $worktype_out->id,
-                    'qty' => $faker->numberBetween(-1, $item_after_insert->qty*-1),
-                ]);
+            $itemlog = Itemlog::create([
+                'item_id' => $itemdata->id,
+                'fee_ref_id' => $fee_muat->id,
+                'qty' => $faker->numberBetween(-1, $item_after_insert->qty*-1),
+                'note' => "muat"
+            ]);
 
             //create worktype of storage fee
-            Single_fee::create([
+            $fee_penitipan = Recurring_fee::create([
                 'item_id' => $itemdata->id,
                 'name' => "penitipan",
                 'price' => 7500,
+                'recurring_type' => "monthly"
             ]);
         }
     }
