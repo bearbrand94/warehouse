@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
+    use SoftDeletes;
     //
     protected $fillable = [
-        'client_id', 'qty', 'nominal',
+        'item_id', 'client_id', 'ref_id', 'ref_table_name', 'qty', 'nominal', 'note', 'desc'
     ];
 
     public static function get_client_transaction($client_id){
