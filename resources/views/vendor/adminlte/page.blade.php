@@ -132,6 +132,21 @@
 
 @section('adminlte_js')
     <script src="{{ asset('public/vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script type="text/javascript">
+      function round(value, decimals) {
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+      }
+      
+      function numberWithCommas(x) {
+          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      //date database functions
+      var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+      
+    </script>
     @stack('js')
     @yield('js')
 @stop

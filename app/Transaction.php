@@ -16,7 +16,6 @@ class Transaction extends Model
 
     public static function get_client_transaction($client_id){
         $transactions_data = DB::table('transactions')
-                ->join('worktypes', 'worktypes.id', '=', 'transactions.worktype_id')
                 ->join('items', 'items.id', '=', 'transactions.item_id')
                 ->select('transactions.*')
                 ->where('items.client_id', $client_id)

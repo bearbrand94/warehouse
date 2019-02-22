@@ -18,6 +18,14 @@ class Item extends Model
         'client_id', 'name', 'unit_name', 'qty',
     ];
 
+    public static function get_item_list(){
+        $item_data = DB::table('items')
+                ->join('clients', 'clients.id', '=', 'items.client_id')
+                ->select('items.*', 'clients.name as owned_by')
+                ->orderBy('updated_at', 'desc');
+        return $item_data->get();
+    }
+    
     public static function get_client_item($client_id){
         $item_data = DB::table('items')
                 ->join('clients', 'clients.id', '=', 'items.client_id')

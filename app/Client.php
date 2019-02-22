@@ -13,6 +13,7 @@ class Client extends Model
      *
      * @var array
      */
+    protected $dates = ['deleted_at'];
     protected $fillable = [
         'name', 'address', 'email', 'phone1', 'phone2',
     ];

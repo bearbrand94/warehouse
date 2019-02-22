@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Service;
 
 use Illuminate\Http\Request;
 use App\Item;
@@ -29,6 +29,10 @@ class ItemService extends Controller
      */
     public function index()
     {
+    }
+
+    public function get_item(Request $request){
+        return response()->json(Item::get_item_list());
     }
 
     public function get_client_item(Request $request){

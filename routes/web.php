@@ -18,6 +18,44 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//
+Route::get('master/client', 'MasterController@master_client_list');
+Route::get('master/client/new', 'MasterController@master_client_new');
+Route::get('master/client/edit', 'MasterController@master_client_edit');
+Route::get('master/client/detail', 'MasterController@master_client_detail');
+Route::get('master/item', 'MasterController@master_item_list');
+Route::get('master/transaction', 'MasterController@master_transaction_form');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // client services
 Route::post('/client/add', 'ClientService@add_new_client');

@@ -110,16 +110,53 @@ return [
     'menu' => [
         'MAIN NAVIGATION',
         [
-            'text' => 'Blog',
+            'text' => 'Dashboard',
             'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'Pages',
+            'text'        => 'Master',
+            'icon'        => 'file',
+            'submenu' => [
+                [
+                    'text' => 'Barang',
+                    'url'  => 'master/item',
+                ],
+                [
+                    'text' => 'Client',
+                    'url'  => 'master/client',
+                ],
+                [
+                    'text' => 'Transaksi',
+                    'url'  => 'master/transaction',
+                ],
+            ],
+        ],
+        [
+            'text' => 'Bongkar',
+            'url'  => 'admin/blog',
+        ],
+        [
+            'text' => 'Muat',
+            'url'  => 'admin/blog',
+        ],
+        [
+            'text'        => 'Print',
             'url'         => 'admin/pages',
             'icon'        => 'file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text' => 'Laporan Bulanan',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Laporan Per Customer',
+                    'url'  => '#',
+                ],
+                [
+                    'text' => 'Rekapitulasi',
+                    'url'  => '#',
+                ],
+            ],
         ],
         'ACCOUNT SETTINGS',
         [
