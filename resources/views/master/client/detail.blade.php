@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-5">
             <div class="box box-primary">
                 <div class="box-body box-profile">
                   <h3 class="profile-username text-center">{{$client->name}}</h3>
@@ -34,7 +34,7 @@
             </div>
             <!-- /.box -->
         </div>
-        <div class="col-md-9">
+        <div class="col-md-7">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#item" data-toggle="tab">Barang</a></li>

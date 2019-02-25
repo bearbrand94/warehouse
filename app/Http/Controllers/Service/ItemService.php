@@ -77,24 +77,8 @@ class ItemService extends Controller
     }
 
     public function get_item_detail(Request $request){
-        $validator = Validator::make(
-            array(
-                "item_id"=>$request->item_id
-            ),
-            array(
-                "item_id" => 'required|exists:items,id'
-            )
-        );
 
-        if ($validator->fails()){
-            $messages = $validator->messages();
-            foreach ($messages->all() as $key => $value) {
-                return $value;
-            }
-        }
-
-        $item_data = Item::find($request->item_id);
-        $item_data->detail = Item::get_item_detail($request->item_id);
+        $item_data = Item::get_item_detail($request->item_id);
         return response()->json($item_data);
     }
 

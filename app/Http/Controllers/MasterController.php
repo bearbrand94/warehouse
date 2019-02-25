@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Client;
+use App\Item;
 class MasterController extends Controller
 {
     /**
@@ -57,6 +58,15 @@ class MasterController extends Controller
     public function master_item_list()
     {
         return view('master.item.list');
+    }
+
+    public function master_item_detail(Request $request)
+    {
+        $item = Item::find($request->id);
+        if (!$item) {
+            return response()->json('item tidak ditemukan',400);
+        };
+        return view('master.item.detail')->with('item', $item::get_item_detail($request->id));
     }
 
     public function master_transaction_form()

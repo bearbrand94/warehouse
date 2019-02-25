@@ -24,6 +24,7 @@ Route::get('master/client/new', 'MasterController@master_client_new');
 Route::get('master/client/edit', 'MasterController@master_client_edit');
 Route::get('master/client/detail', 'MasterController@master_client_detail');
 Route::get('master/item', 'MasterController@master_item_list');
+Route::get('master/item/detail', 'MasterController@master_item_detail');
 Route::get('master/transaction', 'MasterController@master_transaction_form');
 
 

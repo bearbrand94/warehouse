@@ -20,6 +20,7 @@ class CreateItemlogsTable extends Migration
             $table->integer('fee_ref_id')->unsigned();
             $table->integer('qty')->default(0)->nullable();
             $table->string('note')->nullable();
+            $table->string('type')->default("addition");
             $table->timestamps();
             $table->softDeletes();
 

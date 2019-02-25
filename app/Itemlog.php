@@ -9,6 +9,6 @@ class Itemlog extends Model
 {
     //
     protected $fillable = [
-        'item_id', 'fee_ref_id', 'qty', 'note',
+        'item_id', 'fee_ref_id', 'qty', 'note', 'type'
     ];
 }

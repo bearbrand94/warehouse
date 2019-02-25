@@ -55,7 +55,8 @@ class ItemsTableSeeder extends Seeder
                     'item_id' => $itemdata->id,
                     'fee_ref_id' => $fee_bongkar->id,
                     'qty' => $faker->numberBetween(1,10),
-                    'note' => "bongkar"
+                    'note' => "bongkar",
+                    'type' => "addition"
                 ]);
             }
 
@@ -71,8 +72,9 @@ class ItemsTableSeeder extends Seeder
             $itemlog = Itemlog::create([
                 'item_id' => $itemdata->id,
                 'fee_ref_id' => $fee_muat->id,
-                'qty' => $faker->numberBetween(-1, $item_after_insert->qty*-1),
-                'note' => "muat"
+                'qty' => $faker->numberBetween(1, $item_after_insert->qty),
+                'note' => "muat",
+                'type' => "subtraction"
             ]);
 
             //create worktype of storage fee

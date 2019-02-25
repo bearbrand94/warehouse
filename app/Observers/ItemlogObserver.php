@@ -19,7 +19,13 @@ class ItemlogObserver
     {
         // lets save the qty of item, for each new record from itemlog when its created.
         $item = Item::find($itemlog->item_id);
-        $item->qty = $item->qty + $itemlog->qty;
+        if($itemlog->type=="addition"){
+            $item->qty = $item->qty + $itemlog->qty;
+        }
+        elseif ($itemlog->type=="subtraction") {
+            $item->qty = $item->qty - $itemlog->qty;
+        }
+        
         $item->save();
 
 
@@ -40,7 +46,6 @@ class ItemlogObserver
 
             'ref_id' => $itemlog->id,
             'ref_table_name' => "itemlogs",
-
             'qty' => $itemlog->qty,
             'nominal' => $subtotal,
 

@@ -21,12 +21,12 @@ class ItemlogsTableSeeder extends Seeder
         // And now let's generate a few item data for each client:
         for ($z = 1; $z < 31; $z++) {
             for ($i = 0; $i < $faker->numberBetween(1,5); $i++) {
-                $itemdata = Itemlog::create([
-                	'client_id' => $z,
-                    'name' => $faker->domainWord,
-                    'unit_name' => $arrUnitName[$faker->numberBetween(0,0)],
-                    'qty' => 0,
-                ]);
+                // $itemdata = Itemlog::create([
+                // 	'client_id' => $z,
+                //     'name' => $faker->domainWord,
+                //     'unit_name' => $arrUnitName[$faker->numberBetween(0,0)],
+                //     'qty' => 0,
+                // ]);
                 Single_fee::create([
                     'item_id' => $itemdata->id,
                     'name' => "bongkar",

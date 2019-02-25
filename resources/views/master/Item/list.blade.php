@@ -67,7 +67,7 @@
                     // The `data` parameter refers to the data for the cell
                     "render": function ( data, type, row ) {
                         var button_code;
-                        button_code = '<a href="<?php echo url('master/client/detail?id=')?>' + data + '">Detail</a>';
+                        button_code = '<a href="<?php echo url('master/item/detail?id=')?>' + data + '">Detail</a>';
                         return button_code;
                     },
                     "className": "text-center",
