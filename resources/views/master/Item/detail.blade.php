@@ -46,21 +46,52 @@
                         <thead id="th_item">
                           <th>#ID</th>
                           <th>Tanggal</th>
-                          <th>Note</th>
-                          <th>Qty</th>
-                          <th>Harga</th>
+                          <th class="text-center">Bongkar</th>
+                          <th class="text-center">Muat</th>
+                          <th class="text-center">Sisa</th>
                         </thead>
                         <tbody>
+                          <?php $t_item_sisa = $item->qty; ?>
+                          <?php $t_item_bongkar = 0; ?>
+                          <?php $t_item_muat = 0; ?>
+
                           @foreach ($item->detail as $detail)
                           <tr>
                             <td>{{ $detail->id }}</td>
-                            <td>{{ $detail->updated_at }}</td>
-                            <td>{{ $detail->note }}</td>
-                            <td>{{ $detail->qty }}</td>
-                            <td>{{ $detail->price_each*$detail->qty }}</td>
+                            <td>{{ \Carbon\Carbon::parse($detail->updated_at)->format('d M Y, H:i:s') }}</td>
+
+                            <!-- Bongkar Column -->
+                            <td class="text-center">
+                              @if($detail->note == "bongkar")
+                                {{ $detail->qty }}
+                              @endif
+                            </td>
+                            
+                            <!-- Muat Column -->
+                            <td class="text-center">
+                              @if($detail->note == "muat")
+                                {{ $detail->qty }}
+                              @endif
+                            </td>
+                            
+                            <!-- Sisa Column -->
+                            <td class="text-center">{{ $t_item_sisa }}</td>
+                            @if($detail->note == "muat")
+                            <?php $t_item_sisa += $detail->qty; $t_item_muat += $detail->qty ?>
+                            @else
+                            <?php $t_item_sisa -= $detail->qty; $t_item_bongkar += $detail->qty ?>
+                            @endif
                           </tr>
                           @endforeach
                         </tbody>
+                        <tfoot>
+                          <tr>
+                            <td></td><td></td>
+                            <td class="text-center"><label>{{$t_item_bongkar}}</label></td>
+                            <td class="text-center"><label>{{$t_item_muat}}</label></td>
+                            <td class="text-center"><label>{{$t_item_bongkar-$t_item_muat}}</label></td>
+                          </tr>
+                        </tfoot>
                     </table>
                 </div>
               </div>
@@ -81,7 +112,7 @@
                             @if($detail->note == "bongkar")
                             <tr>
                                 <td>{{ $detail->id }}</td>
-                                <td>{{ $detail->updated_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($detail->updated_at)->format('d M Y, H:i:s') }}</td>
                                 <td>{{ $detail->note }}</td>
                                 <td>{{ $detail->qty }}</td>
                                 <td>{{ $detail->price_each*$detail->qty }}</td>
@@ -109,7 +140,7 @@
                           @if($detail->note == "muat")
                           <tr>
                               <td>{{ $detail->id }}</td>
-                              <td>{{ $detail->updated_at }}</td>
+                              <td>{{ \Carbon\Carbon::parse($detail->updated_at)->format('d M Y, H:i:s') }}</td>
                               <td>{{ $detail->note }}</td>
                               <td>{{ $detail->qty }}</td>
                               <td>{{ $detail->price_each*$detail->qty }}</td>
@@ -141,7 +172,9 @@
         }
     });
     $(document).ready(function() {
-        // item_table = $('#t_item').DataTable();
+      item_table = $('#t_item').DataTable({
+        "pageLength": 50
+      });
     });
 </script>
 @stop

@@ -131,7 +131,9 @@
 @stop
 
 @section('adminlte_js')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
     <script src="{{ asset('public/vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript">
       function round(value, decimals) {
         return Number(Math.round(value+'e'+decimals)+'e-'+decimals);

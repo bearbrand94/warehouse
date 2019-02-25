@@ -133,11 +133,11 @@ return [
         ],
         [
             'text' => 'Bongkar',
-            'url'  => 'admin/blog',
+            'url'  => 'bongkar',
         ],
         [
             'text' => 'Muat',
-            'url'  => 'admin/blog',
+            'url'  => 'muat',
         ],
         [
             'text'        => 'Print',
@@ -257,5 +257,6 @@ return [
         'datatables' => true,
         'select2'    => true,
         'chartjs'    => true,
+        'datepicker' => true,
     ],
 ];

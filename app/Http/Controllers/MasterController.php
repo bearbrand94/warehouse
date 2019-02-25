@@ -73,4 +73,14 @@ class MasterController extends Controller
     {
         return view('master.transaction');
     }
+
+    public function page_bongkar()
+    {
+        return view('bongkar');
+    }
+
+    public function page_muat()
+    {
+        return view('muat');
+    }
 }
