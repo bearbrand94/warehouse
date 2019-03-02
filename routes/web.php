@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/bongkar', 'MasterController@page_bongkar');
 Route::get('/muat', 'MasterController@page_muat');
+Route::get('/report/monthly', 'MasterController@monthly_report');
 
 //
 Route::get('master/client', 'MasterController@master_client_list');

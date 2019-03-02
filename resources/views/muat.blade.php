@@ -85,7 +85,7 @@
 
 	        <div class="form-group">
 		        <label for="client_address">Tanggal Muat</label>
-		        <input type="text" class="form-control datepicker">
+		        <input type="text" class="form-control datepicker" placeholder="Isikan Tanggal Muat">
 	        </div>
 	        <div class="form-group">
 		        <label for="client_address">Jumlah Muat</label>

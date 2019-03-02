@@ -145,8 +145,16 @@ return [
             'icon'        => 'file',
             'submenu' => [
                 [
+                    'text' => 'Surat Jalan',
+                    'url'  => 'report/monthly',
+                ],
+                [
+                    'text' => 'Surat Terima',
+                    'url'  => 'report/monthly',
+                ],
+                [
                     'text' => 'Laporan Bulanan',
-                    'url'  => '#',
+                    'url'  => 'report/monthly',
                 ],
                 [
                     'text' => 'Laporan Per Customer',

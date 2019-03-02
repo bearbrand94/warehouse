@@ -83,4 +83,9 @@ class MasterController extends Controller
     {
         return view('muat');
     }
+
+    public function monthly_report()
+    {
+        return view('report.monthly');
+    }
 }
