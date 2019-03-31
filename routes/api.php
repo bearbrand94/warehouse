@@ -31,6 +31,17 @@ Route::post('/item/add', 'Service\ItemService@add_new_item');
 Route::post('/item/edit', 'Service\ItemService@edit_item');
 Route::get('/item/get', 'Service\ItemService@get_item');
 
+Route::get('/bongkarmuat/get', 'Service\BongkarMuatService@get_bongkarmuat_header');
+//Bongkar
+Route::post('/item/bongkar', 'Service\ItemService@bongkar');
+Route::post('/bongkar/edit', 'Service\BongkarMuatService@edit_bongkar');
+Route::post('/bongkar/delete', 'Service\BongkarMuatService@delete_bongkar');
+
+//Muat
+Route::post('/item/muat', 'Service\ItemService@muat');
+Route::post('/muat/edit', 'Service\BongkarMuatService@edit_muat');
+Route::post('/muat/delete', 'Service\BongkarMuatService@delete_muat');
+
 //itemlog
 Route::post('/item/log/add', 'Service\ItemService@add_item_log');
 Route::post('/item/log/update', 'Service\ItemService@update_item_log');

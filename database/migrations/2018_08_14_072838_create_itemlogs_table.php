@@ -17,7 +17,8 @@ class CreateItemlogsTable extends Migration
         Schema::create('itemlogs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('item_id')->unsigned();
-            $table->integer('fee_ref_id')->unsigned();
+            $table->string('ref_table_name');
+            $table->integer('ref_id')->unsigned();
             $table->integer('qty')->default(0)->nullable();
             $table->string('note')->nullable();
             $table->string('type')->default("addition");

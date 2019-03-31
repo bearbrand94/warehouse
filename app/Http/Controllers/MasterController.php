@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Client;
 use App\Item;
+use App\BongkarMuat;
+
 class MasterController extends Controller
 {
     /**
@@ -74,18 +76,58 @@ class MasterController extends Controller
         return view('master.transaction');
     }
 
+    public function master_bongkarmuat_list()
+    {
+        return view('master.bongkarmuat.list');
+    }
+
     public function page_bongkar()
     {
-        return view('bongkar');
+        $client = Client::get_client_list();
+        return view('bongkar')->with('client_data', $client);
+    }
+
+    public function master_bongkar_edit(Request $request)
+    {
+        $bongkar_data = BongkarMuat::get_bongkar_detail($request->id);
+        if (!$bongkar_data) {
+            return response()->json('data tidak ditemukan',400);
+        };
+        return view('master.bongkarmuat.editbongkar')->with('bongkar_data', $bongkar_data);
     }
 
     public function page_muat()
     {
-        return view('muat');
+        $client = Client::get_client_list();
+        return view('muat')->with('client_data', $client);
+    }
+    public function master_muat_edit(Request $request)
+    {
+        $muat_data = BongkarMuat::get_muat_detail($request->id);
+        if (!$muat_data) {
+            return response()->json('data tidak ditemukan',400);
+        };
+        return view('master.bongkarmuat.editmuat')->with('muat_data', $muat_data);
     }
 
     public function monthly_report()
     {
-        return view('report.monthly');
+        $client_id = 7;
+        $report_data;
+        $report_data = Client::find($client_id);
+        $report_data->item_data = Item::get_client_itemcategory($client_id);
+        return view('report.monthly')->with('data', $report_data);
+    }
+
+    public function customer_report(Request $request)
+    {
+        $client_id = 6;
+        $report_data;
+        $report_data = Client::find($client_id);
+        $report_data->item_data = Item::get_client_item($client_id);
+        for ($i=0; $i < count($report_data->item_data); $i++) { 
+            $report_data->item_data[$i] = Item::get_item_detail($report_data->item_data[$i]->id);
+        }
+        return view('report.customer.items')->with('data', $report_data);
     }
 }

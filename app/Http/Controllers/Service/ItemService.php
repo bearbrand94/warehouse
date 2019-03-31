@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Item;
 use App\Itemlog;
 use App\Single_fee;
+use App\Bongkar_header;
+use App\Bongkar_footer;
+use App\Muat_header;
+use App\Muat_footer;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -77,7 +82,6 @@ class ItemService extends Controller
     }
 
     public function get_item_detail(Request $request){
-
         $item_data = Item::get_item_detail($request->item_id);
         return response()->json($item_data);
     }
@@ -102,6 +106,44 @@ class ItemService extends Controller
                 return $value;
             }
         }
+    }
+
+    public function bongkar(Request $request){
+        $bongkar_header = new Bongkar_header();
+        $bongkar_header->client_id    = $request->client_id;
+        $bongkar_header->droporder_id = $request->droporder_id;
+        $bongkar_header->truck_number = $request->truck_number;
+        $bongkar_header->delivered_at  = date("Y-m-d H:i:s", strtotime($request->delivered_at));
+        $bongkar_header->save();
+
+        foreach (json_decode($request->bongkar_footer) as $footer) {
+            $bongkar_footer = new Bongkar_footer();
+            $bongkar_footer->item_id = $footer->id;
+            $bongkar_footer->qty = $footer->qty;
+            $bongkar_footer->header_id = $bongkar_header->id;
+            $bongkar_footer->note = $footer->note;
+            $bongkar_footer->save();
+        }
+        return response()->json(Item::get_client_item($request->client_id));
+    }
+
+    public function muat(Request $request){
+        $muat_header = new Muat_header();
+        $muat_header->client_id    = $request->client_id;
+        $muat_header->droporder_id = $request->droporder_id;
+        $muat_header->truck_number = $request->truck_number;
+        $muat_header->delivered_at  = date("Y-m-d H:i:s", strtotime($request->delivered_at));
+        $muat_header->save();
+
+        foreach (json_decode($request->muat_footer) as $footer) {
+            $muat_footer = new Muat_footer();
+            $muat_footer->item_id = $footer->id;
+            $muat_footer->qty = $footer->qty;
+            $muat_footer->header_id = $muat_header->id;
+            $muat_footer->note = $footer->note;
+            $muat_footer->save();
+        }
+        return response()->json(Item::get_client_item($request->client_id));
     }
 
     public function add_new_item(Request $request){

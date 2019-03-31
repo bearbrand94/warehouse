@@ -111,7 +111,7 @@ return [
         'MAIN NAVIGATION',
         [
             'text' => 'Dashboard',
-            'url'  => 'admin/blog',
+            'url'  => 'home',
         ],
         [
             'text'        => 'Master',
@@ -126,39 +126,35 @@ return [
                     'url'  => 'master/client',
                 ],
                 [
+                    'text' => 'Bongkar Muat',
+                    'url'  => 'master/bongkar',
+                ],           
+                [
                     'text' => 'Transaksi',
                     'url'  => 'master/transaction',
                 ],
             ],
         ],
         [
-            'text' => 'Bongkar',
+            'text' => 'Bongkar (Barang Masuk)',
             'url'  => 'bongkar',
         ],
         [
-            'text' => 'Muat',
+            'text' => 'Muat (Barang Keluar)',
             'url'  => 'muat',
         ],
         [
-            'text'        => 'Print',
+            'text'        => 'Reporting',
             'url'         => 'admin/pages',
             'icon'        => 'file',
             'submenu' => [
                 [
-                    'text' => 'Surat Jalan',
-                    'url'  => 'report/monthly',
-                ],
-                [
-                    'text' => 'Surat Terima',
-                    'url'  => 'report/monthly',
+                    'text' => 'Laporan Customer',
+                    'url'  => 'report/customer',
                 ],
                 [
                     'text' => 'Laporan Bulanan',
                     'url'  => 'report/monthly',
-                ],
-                [
-                    'text' => 'Laporan Per Customer',
-                    'url'  => '#',
                 ],
                 [
                     'text' => 'Rekapitulasi',

@@ -36,8 +36,8 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#item" data-toggle="tab">Semua</a></li>
-              <li><a href="#bongkar" data-toggle="tab">Bongkar</a></li>
-              <li><a href="#muat" data-toggle="tab">Muat</a></li>
+<!--               <li><a href="#bongkar" data-toggle="tab">Bongkar</a></li>
+              <li><a href="#muat" data-toggle="tab">Muat</a></li> -->
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="item">
@@ -56,27 +56,28 @@
                           <?php $t_item_muat = 0; ?>
 
                           @foreach ($item->detail as $detail)
+                            <?php $type = $detail->note ?>
                           <tr>
                             <td>{{ $detail->id }}</td>
-                            <td>{{ \Carbon\Carbon::parse($detail->updated_at)->format('d M Y, H:i:s') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($detail->created_at)->format('d M Y') }}</td>
 
                             <!-- Bongkar Column -->
                             <td class="text-center">
-                              @if($detail->note == "bongkar")
+                              @if($type == "bongkar")
                                 {{ $detail->qty }}
                               @endif
                             </td>
                             
                             <!-- Muat Column -->
                             <td class="text-center">
-                              @if($detail->note == "muat")
+                              @if($type == "muat")
                                 {{ $detail->qty }}
                               @endif
                             </td>
                             
                             <!-- Sisa Column -->
                             <td class="text-center">{{ $t_item_sisa }}</td>
-                            @if($detail->note == "muat")
+                            @if($type == "muat")
                             <?php $t_item_sisa += $detail->qty; $t_item_muat += $detail->qty ?>
                             @else
                             <?php $t_item_sisa -= $detail->qty; $t_item_bongkar += $detail->qty ?>
@@ -89,65 +90,9 @@
                             <td></td><td></td>
                             <td class="text-center"><label>{{$t_item_bongkar}}</label></td>
                             <td class="text-center"><label>{{$t_item_muat}}</label></td>
-                            <td class="text-center"><label>{{$t_item_bongkar-$t_item_muat}}</label></td>
+                            <td class="text-center"><label>01 Maret 2019 = {{$t_item_sisa}}</label></td>
                           </tr>
                         </tfoot>
-                    </table>
-                </div>
-              </div>
-              <!-- /.tab-pane -->
-
-              <div class="tab-pane" id="bongkar">
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0" id="t_bongkar">
-                        <thead id="th_item">
-                            <th>#ID</th>
-                            <th>Tanggal</th>
-                            <th>Note</th>
-                            <th>Qty</th>
-                            <th>Harga</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($item->detail as $detail)
-                            @if($detail->note == "bongkar")
-                            <tr>
-                                <td>{{ $detail->id }}</td>
-                                <td>{{ \Carbon\Carbon::parse($detail->updated_at)->format('d M Y, H:i:s') }}</td>
-                                <td>{{ $detail->note }}</td>
-                                <td>{{ $detail->qty }}</td>
-                                <td>{{ $detail->price_each*$detail->qty }}</td>
-                            </tr>
-                            @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-              </div>
-              <!-- /.tab-pane -->
-
-              <div class="tab-pane" id="muat">
-                <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0" id="t_muat">
-                        <thead id="th_item">
-                          <th>#ID</th>
-                          <th>Tanggal</th>
-                          <th>Note</th>
-                          <th>Qty</th>
-                          <th>Harga</th>
-                        </thead>
-                        <tbody>
-                          @foreach ($item->detail as $detail)
-                          @if($detail->note == "muat")
-                          <tr>
-                              <td>{{ $detail->id }}</td>
-                              <td>{{ \Carbon\Carbon::parse($detail->updated_at)->format('d M Y, H:i:s') }}</td>
-                              <td>{{ $detail->note }}</td>
-                              <td>{{ $detail->qty }}</td>
-                              <td>{{ $detail->price_each*$detail->qty }}</td>
-                          </tr>
-                          @endif
-                          @endforeach
-                        </tbody>
                     </table>
                 </div>
               </div>
@@ -173,7 +118,8 @@
     });
     $(document).ready(function() {
       item_table = $('#t_item').DataTable({
-        "pageLength": 50
+        "pageLength": 50,
+         "order": [[ 1, "asc" ]]
       });
     });
 </script>

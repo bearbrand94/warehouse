@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/bongkar', 'MasterController@page_bongkar');
 Route::get('/muat', 'MasterController@page_muat');
 Route::get('/report/monthly', 'MasterController@monthly_report');
+Route::get('/report/customer', 'MasterController@customer_report');
 
 //
 Route::get('master/client', 'MasterController@master_client_list');
@@ -30,6 +31,10 @@ Route::get('master/client/detail', 'MasterController@master_client_detail');
 Route::get('master/item', 'MasterController@master_item_list');
 Route::get('master/item/detail', 'MasterController@master_item_detail');
 Route::get('master/transaction', 'MasterController@master_transaction_form');
+Route::get('master/bongkar', 'MasterController@master_bongkarmuat_list');
+Route::get('master/bongkar/edit', 'MasterController@master_bongkar_edit');
+Route::get('master/muat', 'MasterController@master_bongkarmuat_list');
+Route::get('master/muat/edit', 'MasterController@master_muat_edit');
 
 
 

@@ -30,7 +30,7 @@ class ClientService extends Controller
     }
 
     public function get_client(Request $request){
-        return response()->json(Client::all());
+        return response()->json(Client::get_client_list());
     }
 
     public function add_new_client(Request $request){
