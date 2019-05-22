@@ -25,6 +25,7 @@ Route::get('/client/get', 'Service\ClientService@get_client');
 
 // item services
 Route::get('/client/item/get', 'Service\ItemService@get_client_item');
+Route::get('/client/item/category/get', 'Service\ItemService@get_client_item_category');
 Route::get('/item/detail/get', 'Service\ItemService@get_item_detail');
 Route::get('/item/fees/get', 'Service\ItemService@get_item_fees');
 Route::post('/item/add', 'Service\ItemService@add_new_item');
@@ -40,6 +41,8 @@ Route::post('/bongkar/delete', 'Service\BongkarMuatService@delete_bongkar');
 //Muat
 Route::post('/item/muat', 'Service\ItemService@muat');
 Route::post('/muat/edit', 'Service\BongkarMuatService@edit_muat');
+Route::post('/muat/footer/edit', 'Service\BongkarMuatService@edit_muat_footer');
+Route::post('/muat/header/edit', 'Service\BongkarMuatService@edit_muat_header');
 Route::post('/muat/delete', 'Service\BongkarMuatService@delete_muat');
 
 //itemlog

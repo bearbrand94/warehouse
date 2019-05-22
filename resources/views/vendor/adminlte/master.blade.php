@@ -54,6 +54,13 @@
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
     <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.fn.dataTable.moment( 'DD MMM YYYY' );
+        } );
+    </script>
 @endif
 
 @if(config('adminlte.plugins.chartjs'))

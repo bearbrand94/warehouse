@@ -25,31 +25,29 @@
                 <!-- form start -->
                 <div class="form-group">
                     <label for="client_name">Pemilik Barang</label>
-                    <select class="form-control" id="select_client">   
+                    <select class="form-control" id="select_client" required>   
                         <option></option>
                         @foreach ($client_data as $client)
                             <option value="{{$client->id}}">{{$client->name}}</option>
                         @endforeach   
                     </select>
+                    <p><span class="text-danger" id="warning_select_client"></span></p>
                 </div>
                 <div class="form-group">
                     <label for="truck_number">No. Kendaraan</label>
-                    <input type="text" class="form-control" id="truck_number" name="truck_number" placeholder="Masukkan Nomor Kendaraan">
-                    @if($errors->has('name'))
-                        <p><span class="text-warning">{{$errors->first('name')}}</span></p>
-                    @endif
+                    <input type="text" class="form-control" id="truck_number" name="truck_number" placeholder="Masukkan Nomor Kendaraan" required>
+                    <p><span class="text-danger" id="warning_truck_number"></span></p>
                 </div>
                 <div class="form-group">
                     <label for="do_number">No. Surat / DO</label>
-                    <input type="text" class="form-control" id="do_number" name="do_number" placeholder="Diisi Bila Ada">
-                    @if($errors->has('name'))
-                        <p><span class="text-warning">{{$errors->first('name')}}</span></p>
-                    @endif
+                    <input type="text" class="form-control" id="do_number" name="do_number" placeholder="Diisi Bila Ada" required>
+                    <p><span class="text-danger" id="warning_do_number"></span></p>
                 </div>
 
                 <div class="form-group">
-                    <label for="bongkar_date">Tanggal Muat</label>
-                    <input type="text" class="form-control datepicker" placeholder="Isikan Tanggal Muat" id="muat_date">
+                    <label for="muat_date">Tanggal Muat</label>
+                    <input type="text" class="form-control datepicker" placeholder="Isikan Tanggal Muat" id="muat_date" required>
+                    <p><span class="text-danger" id="warning_muat_date"></span></p>
                 </div>
             </div>
             <!-- /.box-body -->
@@ -191,7 +189,7 @@
         item.id = $('#select_item option:selected').val();
         item.name = $('#select_item option:selected').text();
         item.qty = $('#item_qty').val();
-        item.note = $("#item_note").val(),
+        item.note = $("#item_note").val();
         item_list.push(item);
 
         fill_item_table();
@@ -210,9 +208,11 @@
             {
                 $('#select_item').html('');
                 for (var i = response.length - 1; i >= 0; i--) {
-                    var newOption = new Option(response[i].name, response[i].id, false, false);
-                    $(newOption).attr('data-qty', response[i].qty);
-                    $('#select_item').append(newOption).trigger('change');
+                    if(response[i].qty>0){
+                        var newOption = new Option(response[i].name, response[i].id, false, false);
+                        $(newOption).attr('data-qty', response[i].qty);
+                        $('#select_item').append(newOption).trigger('change');
+                    }
                 }
             },
             error: function(xhr) {
@@ -222,28 +222,71 @@
         });
     }
 
+    function form1_validator() {
+      var validationFlag = true;
+      var inpObj = document.getElementById("select_client");
+      if (!inpObj.checkValidity()) {
+        document.getElementById("warning_select_client").innerHTML = inpObj.validationMessage;
+        validationFlag = false;
+      }
+      else{
+        document.getElementById("warning_select_client").innerHTML = "";
+      }
+
+      var inpObj = document.getElementById("truck_number");
+      if (!inpObj.checkValidity()) {
+        document.getElementById("warning_truck_number").innerHTML = inpObj.validationMessage;
+        validationFlag = false;
+      }
+      else{
+        document.getElementById("warning_truck_number").innerHTML = "";
+      }
+
+      var inpObj = document.getElementById("do_number");
+      if (!inpObj.checkValidity()) {
+        document.getElementById("warning_do_number").innerHTML = inpObj.validationMessage;
+        validationFlag = false;
+      }
+      else{
+        document.getElementById("warning_do_number").innerHTML = "";
+      }
+
+      var inpObj = document.getElementById("muat_date");
+      if (!inpObj.checkValidity()) {
+        document.getElementById("warning_muat_date").innerHTML = inpObj.validationMessage;
+        validationFlag = false;
+      }
+      else{
+        document.getElementById("warning_muat_date").innerHTML = "";
+      }
+
+      return validationFlag;
+    }
+
     function form_1(){
         $('#form_1').show();
         $('#form_2').hide();
     }
 
     function form_2(){
-        $('#form_2').show();
-        $('#form_1').hide();
-        ajax_select_item();
-        
-        item_list = [];
-        fill_item_table();
+        if(form1_validator()){
+            $('#form_2').show();
+            $('#form_1').hide();
+            ajax_select_item();
+            
+            item_list = [];
+            fill_item_table();
 
-        $('#select_item').select2({
-            placeholder: 'Tidak terdapat item, tambahkan barang baru.',
-        });
-        $( "#select_item" ).change(function() {
-            var sisa = $('#select_item').find(':selected').data('qty');
-            $('#item_sisa').html(sisa);
-        });
-        
-        $('#item_client_name').html($('#select_client option:selected').text());
+            $('#select_item').select2({
+                placeholder: 'Tidak terdapat barang yang tersisa.',
+            });
+            $( "#select_item" ).change(function() {
+                var sisa = $('#select_item').find(':selected').data('qty');
+                $('#item_sisa').html(sisa);
+            });
+            
+            $('#item_client_name').html($('#select_client option:selected').text());
+        }
     }
 
     $( document ).ready(function() {

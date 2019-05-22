@@ -12,6 +12,8 @@ use App\Bongkar_header;
 use App\Muat_header;
 use App\Observers\BongkarObserver;
 use App\Observers\MuatObserver;
+use App\Observers\BongkarHeaderObserver;
+use App\Observers\MuatHeaderObserver;
 
 class AppServiceProvider extends ServiceProvider
 {

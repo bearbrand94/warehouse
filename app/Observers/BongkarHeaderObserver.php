@@ -26,12 +26,14 @@ class BongkarHeaderObserver
      */
     public function updated(Bongkar_header $bongkarHeader)
     {
-        //
-        $itemlog = Itemlog::where('ref_id', $bongkarFooter->id)->where('ref_table_name', 'Bongkar_footer')->first();
-        $itemlog->item_id = $bongkarFooter->item_id;
-        $itemlog->qty = $bongkarFooter->qty;
-        $itemlog->note = $bongkarFooter->note ? $bongkarFooter->note : "bongkar";
-        $itemlog->save();
+        $itemlog = Itemlog::join('Bongkar_footer', "Bongkar_footer.id", "=", "Itemlogs.ref_id")
+                    ->where('ref_table_name', 'Bongkar_footer')
+                    ->where('Bongkar_footer.header_id', $bongkarHeader->id)
+                    ->get();
+        foreach ($itemlog as $log) {
+            $log->created_at = $bongkarHeader->delivered_at;
+            $log->save();
+        }
     }
 
     /**

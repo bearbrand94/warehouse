@@ -60,6 +60,26 @@ class ItemService extends Controller
         return response()->json(Item::get_client_item($request->client_id));
     }
 
+    public function get_client_item_category(Request $request){
+        $validator = Validator::make(
+            array(
+                "client_id" =>  $request->client_id
+            ),
+            array(
+                "client_id" => 'required|exists:clients,id'
+            )
+        );
+
+        if ($validator->fails()){
+            $messages = $validator->messages();
+            foreach ($messages->all() as $key => $value) {
+                return $value;
+            }
+        }
+
+        return response()->json(Item::get_client_itemcategory($request->client_id));
+    }
+
     public function get_item_fees(Request $request){
         $validator = Validator::make(
             array(

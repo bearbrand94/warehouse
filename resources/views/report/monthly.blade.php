@@ -26,21 +26,6 @@
   <section class="invoice">
     <!-- title row -->
 
-    <!-- info row -->
-    <div class="row invoice-info">
-
-      <div class="col-xs-8">
-        <!-- <strong>Kepada Yth,</strong><br> -->
-        <p style="font-size: 18px;">{{$data->name}}</p>
-      </div>
-      <!-- /.col -->
-      <div class="col-xs-4 text-right">
-<!--         Tanggal Cetak:</b><br>
-        <b>Surabaya, {{date('d F Y', strtotime(now()))}}</b> -->
-        <br>
-      </div>
-      <!-- /.col -->
-    </div>
     <!-- /.row -->
     <?php 
       class Rekapitulasi
@@ -54,11 +39,25 @@
         public $biaya = 0;
       }
       $rekap_data = [];
+      $head_cetak = 0;
     ?>
         <!-- Table row -->
     @foreach ($data->item_data as $item)
     @if(count($item->items) > 0 || $item->total_sisa > 0)
     <div class="page">
+      @if($head_cetak == 0)
+      <div class="row invoice-info">
+
+        <div class="col-xs-8">
+          <!-- <strong>Kepada Yth,</strong><br> -->
+          <p style="font-size: 18px;">{{$data->name}}</p></div>
+        <!-- /.col -->
+        <div class="col-xs-4 text-right"></div>
+        <!-- /.col -->
+      </div>
+      <?php $head_cetak = 1;?>   
+      @endif
+
       <div class="row">
         <div class="col-xs-12 table-responsive">
           <table class="table table-bordered table-condensed">
