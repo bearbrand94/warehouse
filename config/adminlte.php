@@ -129,10 +129,6 @@ return [
                     'text' => 'Bongkar Muat',
                     'url'  => 'master/bongkar',
                 ],           
-                [
-                    'text' => 'Transaksi',
-                    'url'  => 'master/transaction',
-                ],
             ],
         ],
         [
@@ -145,72 +141,11 @@ return [
         ],
         [
             'text'        => 'Reporting',
-            'url'         => 'admin/pages',
+            'url'  => 'report/monthly',
             'icon'        => 'file',
-            'submenu' => [
-                [
-                    'text' => 'Laporan Customer',
-                    'url'  => 'report/customer',
-                ],
-                [
-                    'text' => 'Laporan Bulanan',
-                    'url'  => 'report/monthly',
-                ],
-                [
-                    'text' => 'Rekapitulasi',
-                    'url'  => '#',
-                ],
-            ],
+
         ],
-        'ACCOUNT SETTINGS',
-        [
-            'text' => 'Profile',
-            'url'  => 'admin/settings',
-            'icon' => 'user',
-        ],
-        [
-            'text' => 'Change Password',
-            'url'  => 'admin/settings',
-            'icon' => 'lock',
-        ],
-        [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
-            'submenu' => [
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-            ],
-        ],
+
         'LABELS',
         [
             'text'       => 'Important',
