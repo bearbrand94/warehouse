@@ -169,6 +169,7 @@ class ItemService extends Controller
     public function add_new_item(Request $request){
         $this->item_validator($request);
         $item = new Item();
+        $item->category_id  = $request->category_id;
         $item->client_id    = $request->client_id;
         $item->name         = $request->name;
         $item->unit_name    = $request->unit_name;

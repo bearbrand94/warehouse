@@ -94,7 +94,8 @@ class MasterController extends Controller
         if (!$bongkar_data) {
             return response()->json('data tidak ditemukan',400);
         };
-        return view('master.bongkarmuat.editbongkar')->with('bongkar_data', $bongkar_data);
+        $item_data = Item::get_client_item($bongkar_data->client_id);
+        return view('master.bongkarmuat.editbongkar')->with('bongkar_data', $bongkar_data)->with('item_data', $item_data);
     }
 
     public function page_muat()
@@ -102,13 +103,15 @@ class MasterController extends Controller
         $client = Client::get_client_list();
         return view('muat')->with('client_data', $client);
     }
+    
     public function master_muat_edit(Request $request)
     {
         $muat_data = BongkarMuat::get_muat_detail($request->id);
         if (!$muat_data) {
             return response()->json('data tidak ditemukan',400);
         };
-        return view('master.bongkarmuat.editmuat')->with('muat_data', $muat_data);
+        $item_data = Item::get_client_item($muat_data->client_id);
+        return view('master.bongkarmuat.editmuat')->with('muat_data', $muat_data)->with('item_data', $item_data);
     }
 
     public function report_monthly(Request $request)

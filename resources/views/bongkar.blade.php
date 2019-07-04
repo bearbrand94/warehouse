@@ -206,6 +206,7 @@
             type: 'post', // replaced from put
             dataType: "JSON",
             data: {
+                category_id: $('#select_new_item_category').val(),
                 client_id: $("#select_client").val(),
                 name: $("#new_item_name").val(),
                 unit_name: $("#new_item_unit_name").val()
@@ -246,7 +247,7 @@
             },
             success: function (response)
             {
-                alert('Bongkar Berhasil.');
+                // alert('Bongkar Berhasil.');
                 window.location.replace("{{ url('/master/bongkar') }}");
             },
             error: function(xhr) {

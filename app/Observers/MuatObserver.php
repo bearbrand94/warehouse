@@ -43,7 +43,6 @@ class MuatObserver
         $itemlog = Itemlog::where('ref_id', $muatFooter->id)->where('ref_table_name', 'Muat_footer')->first();
         $itemlog->item_id = $muatFooter->item_id;
         $itemlog->qty = $muatFooter->qty;
-        $itemlog->note = $muatFooter->note ? $Muat_footer->note : "muat";
         $itemlog->save();
     }
 

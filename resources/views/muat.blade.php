@@ -173,7 +173,7 @@
             },
             success: function (response)
             {
-                alert('Muat Berhasil.');
+                // alert('Muat Berhasil.');
                 window.location.replace("{{ url('/master/muat') }}");
             },
             error: function(xhr) {

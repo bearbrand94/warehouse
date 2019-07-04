@@ -100,7 +100,7 @@
 
     $( document ).ready(function() {
         var d = new Date();
-        $('#period_month').val(d.getMonth()+1);
+        $('#period_month').val(d.getMonth());
 
         $('#select_client').select2({
             placeholder: 'Select an option',

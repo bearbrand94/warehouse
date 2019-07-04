@@ -8,6 +8,31 @@
 @stop
 
 @section('content')
+<!-- Edit Modal -->
+<div class="modal" id="edit-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Modal body..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
     <div class="row">
         <!-- Header Data -->
         <div class="col-md-12">
@@ -91,7 +116,8 @@
 @section('js')
 
 <script type="text/javascript">
-    console.log({!! $muat_data->detail !!});
+    console.log({!! json_encode($muat_data) !!});
+    console.log({!! json_encode($item_data) !!});
     arrFooter=JSON.parse('{!! $muat_data->detail !!}');
 
     function edit_client(){

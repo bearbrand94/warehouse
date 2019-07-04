@@ -116,7 +116,7 @@
                     "targets": 7
                 }
             ],
-            "order": [0,"desc"] 
+            "order": [1,"desc"] 
         });
     });
 </script>

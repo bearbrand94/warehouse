@@ -44,7 +44,6 @@ class BongkarObserver
         $itemlog = Itemlog::where('ref_id', $bongkarFooter->id)->where('ref_table_name', 'Bongkar_footer')->first();
         $itemlog->item_id = $bongkarFooter->item_id;
         $itemlog->qty = $bongkarFooter->qty;
-        $itemlog->note = $bongkarFooter->note ? $bongkarFooter->note : "bongkar";
         $itemlog->save();
     }
 
