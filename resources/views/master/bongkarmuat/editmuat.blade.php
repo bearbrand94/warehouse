@@ -15,18 +15,31 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Item</h4>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        Modal body..
+        <div class="form-group">
+            <input type="hidden" id="edit_index" value="">
+            <label for="edit_select_item">Barang</label>
+            <select class="form-control" id="edit_select_item" required>
+                @foreach($item_data as $item)
+                <option value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit_item_qty">Jumlah</label>
+            <input type="number" class="form-control" id="edit_item_qty" placeholder="Isikan Jumlah Muat." min="1" required>
+        </div>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save_item()">Simpan</button>
       </div>
 
     </div>
@@ -93,13 +106,12 @@
                     <div class="table-responsive">
                         <table class="table table-bordered" width="100%" cellspacing="0" id="t_item" style="margin-bottom: 50px;">
                             <thead id="th_item">
-                              <th>#ID</th>
+                              <th>#Item</th>
                               <th>Nama Barang</th>
                               <th>Jumlah Muat</th>
                               <th>Action</th>
                             </thead>
-                            <tbody>
-
+                            <tbody id="tb_item">
                             </tbody>
                         </table>
                     </div>
@@ -108,7 +120,7 @@
             </div>
         </div>
     </div>
-    <button class="pull-right">Simpan</button>
+    <button class="pull-right btn-primary" onclick="save()">Simpan</button>
     <button class="pull-right">Batal</button>
     <button class="pull-left">Hapus Data</button>
 @stop
@@ -120,60 +132,69 @@
     console.log({!! json_encode($item_data) !!});
     arrFooter=JSON.parse('{!! $muat_data->detail !!}');
 
-    function edit_client(){
-        $.ajax(
-        {
-            url: "{{ url('api/muat/edit') }}",
-            type: 'post', // replaced from put
-            dataType: "JSON",
-            data: {
-                id: $("#client_id").val(),
-                name: $("#client_name").val(),
-                address: $("#client_address").val(),
-                phone1: $("#client_phone1").val(),
-                phone2: $("#client_phone2").val(),
-                email: $("#client_email").val()
-            },
-            success: function (response)
-            {
-                alert(response); // see the reponse sent
-                console.log(response); 
-                window.location.replace("{{ url('/master/client') }}");
-            },
-            error: function(xhr) {
-                alert(xhr.responseText); // this line will save you tons of hours while debugging
-                console.log(xhr.responseText); 
-            // do something here because of error
-           }
-        });
+    function save(){
+        var header_id = {{ $muat_data->id }};
+        var delivered_at = $("#delivered_at").val();
+        var droporder_id = $("#droporder_id").val();
+        var truck_number = $("#truck_number").val();
+        console.log(header_id);
+        console.log(delivered_at);
+        console.log(droporder_id);
+        console.log(truck_number);
+        console.log(arrFooter);
+    }
+
+    function edit_item(index){
+        $('#edit_index').val(index);
+        $('#edit_select_item').val(arrFooter[index].item_id);
+        $('#edit_item_qty').val(arrFooter[index].qty);
+        $('#edit-modal').modal('show');
+
+    }
+
+    function save_item(){
+        var index = $('#edit_index').val();
+        arrFooter[index].item_id = $('#edit_select_item').val();
+        arrFooter[index].item_name = $('#edit_select_item option:selected').text();
+        arrFooter[index].qty = $('#edit_item_qty').val();
+        console.log(arrFooter[index]);
+        populate_item_table();
+    }
+
+    function add_item(){
+        var item = new Object();
+        item.item_id = $('#select_item option:selected').val();
+        item.item_name = $('#select_item option:selected').text();
+        item.qty = $('#item_qty').val();
+        item.note = $("#item_note").val();
+        arrFooter.push(item);
+        populate_item_table();
+    }
+
+    function delete_item(index){
+        arrFooter.splice(index,1);
+        populate_item_table();
     }
 
     function populate_item_table(){
-        var table = document.getElementById("t_item");
-
-        // helper function        
-        function addCell(tr, text) {
-            var td = tr.insertCell();
-            td.textContent = text;
-            return td;
-        }
+        $('#tb_item').empty();
         // insert data
-
+        var content="";
         for (var i = 0; i < arrFooter.length; i++) {
-            var row = table.insertRow();
-            addCell(row, arrFooter[i].item_id);
-            addCell(row, arrFooter[i].item_name);
-            addCell(row, arrFooter[i].qty);
-            
+            content += '<tr><td class="text-left">' + arrFooter[i].item_id + '</td>';
+            content += '<td class="text-left"><a href={{ url("master/item/detail?id=") }}' + arrFooter[i].item_id + '>' + arrFooter[i].item_name + '</a></td>';
+            content += '<td class="text-left">' + arrFooter[i].qty + '</td>';
 
-            var button_group = "<div class='input-group-btn'>";
+            var button_group = "<td><div class='input-group-btn'>";
             button_group     += "<button type='button' class='btn btn-default dropdown-toggle btn-sm' data-toggle='dropdown'>Action<span class='fa fa-caret-down'></span></button>";
             button_group     += "<ul class='dropdown-menu' role='menu'>";
             button_group     += "<li><a class='btn btn-sm' style='text-align:left;' onclick=edit_item(" + i + ")>Ubah</a></li>";
             button_group     += "<li><a class='btn btn-sm delete' style='text-align:left;' onclick=delete_item(" + i + ")>Hapus</a></li>";
-            button_group     += "</ul></div>";
-            row.insertCell().innerHTML = button_group;
+            button_group     += "</ul></div></td>";
+            content += button_group;
+            content += '</tr>';
         };
+        $("#tb_item").html(content);
     }
 
     $( document ).ready(function() {

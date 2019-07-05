@@ -131,8 +131,8 @@ class ItemService extends Controller
     public function bongkar(Request $request){
         $bongkar_header = new Bongkar_header();
         $bongkar_header->client_id    = $request->client_id;
-        $bongkar_header->droporder_id = $request->droporder_id;
-        $bongkar_header->truck_number = $request->truck_number;
+        $bongkar_header->droporder_id = $request->droporder_id ? $request->droporder_id : "-";
+        $bongkar_header->truck_number = $request->truck_number ? $request->truck_number : "-";
         $bongkar_header->delivered_at  = date("Y-m-d H:i:s", strtotime($request->delivered_at));
         $bongkar_header->save();
 
@@ -150,8 +150,8 @@ class ItemService extends Controller
     public function muat(Request $request){
         $muat_header = new Muat_header();
         $muat_header->client_id    = $request->client_id;
-        $muat_header->droporder_id = $request->droporder_id;
-        $muat_header->truck_number = $request->truck_number;
+        $muat_header->droporder_id = $request->droporder_id ? $request->droporder_id : "-";
+        $muat_header->truck_number = $request->truck_number ? $request->truck_number : "-";
         $muat_header->delivered_at  = date("Y-m-d H:i:s", strtotime($request->delivered_at));
         $muat_header->save();
 

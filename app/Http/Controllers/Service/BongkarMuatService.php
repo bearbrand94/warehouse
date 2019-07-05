@@ -95,6 +95,7 @@ class BongkarMuatService extends Controller
     }
 
     public function edit_muat(Request $request){
+        $muat_header = 
         $muat_data = Muat_footer::find($request->id);
         if (!$muat_data) {
             return response()->json('id not found',400);

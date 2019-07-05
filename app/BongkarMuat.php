@@ -36,10 +36,10 @@ class BongkarMuat extends Model
                 ->select('bongkar_header.*', 'clients.name as owned_by', DB::raw('concat("TB", LPAD(bongkar_header.id, 6, "0")) as showid'))
                 ->where('bongkar_header.id', $bongkar_header_id)
                 ->first();
-        $bongkar_data->detail = DB::table('Bongkar_footer')
-            ->join('items', 'items.id', '=', 'Bongkar_footer.item_id')
-            ->select('Bongkar_footer.*', 'items.name as item_name')
-            ->where('Bongkar_footer.header_id', $bongkar_data->id)
+        $bongkar_data->detail = DB::table('bongkar_footer')
+            ->join('items', 'items.id', '=', 'bongkar_footer.item_id')
+            ->select('bongkar_footer.*', 'items.name as item_name')
+            ->where('bongkar_footer.header_id', $bongkar_data->id)
             ->orderBy('created_at', 'desc')->get();
         
         return $bongkar_data;

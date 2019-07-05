@@ -16,7 +16,7 @@
 
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                      <b>Pemilik</b> <a class="pull-right">{{$item->owned_by}}</a>
+                      <b>Pemilik</b> <a href='{{ url("master/client/detail?id=").$item->client_id }}' class="pull-right">{{$item->owned_by}}</a>
                     </li>
                     <li class="list-group-item">
                       <b>Satuan</b> <a class="pull-right">{{$item->unit_name}}</a>
@@ -44,7 +44,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" width="100%" cellspacing="0" id="t_item">
                         <thead id="th_item">
-                          <th>#ID</th>
+                          <th>#BongkarMuat</th>
                           <th>Tanggal</th>
                           <th class="text-center">Bongkar</th>
                           <th class="text-center">Muat</th>
@@ -58,7 +58,13 @@
                           @foreach ($item->detail as $detail)
                             <?php $type = $detail->note ?>
                           <tr>
-                            <td>{{ $detail->id }}</td>
+                            <td>
+                              @if($type == "bongkar")
+                                <a href="{{ url("master/bongkar/edit?id=").$detail->header_id }}">{{ $detail->header_id }}</a>
+                              @else
+                                <a href="{{ url("master/muat/edit?id=").$detail->header_id }}">{{ $detail->header_id }}</a>
+                              @endif
+                            </td>
                             <td>{{ \Carbon\Carbon::parse($detail->created_at)->format('d M Y') }}</td>
 
                             <!-- Bongkar Column -->
@@ -108,6 +114,8 @@
 @section('js')
 
 <script type="text/javascript">
+    console.log({!! json_encode($detail) !!});
+
     var item_table;
     var transaction_table;
 

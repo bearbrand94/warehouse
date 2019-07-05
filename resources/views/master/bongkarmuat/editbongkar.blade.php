@@ -16,7 +16,7 @@
 
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                      <b>Pemilik</b> <a class="pull-right">{{$bongkar_data->owned_by}}</a>
+                      <b>Pemilik</b> <a href='{{ url("master/client/detail?id=").$bongkar_data->client_id }}' class="pull-right">{{$bongkar_data->owned_by}}</a>
                     </li>
                     <li class="list-group-item">
                       <b>Tanggal Bongkar</b> <a class="pull-right">{{ \Carbon\Carbon::parse($bongkar_data->delivered_at)->format('d M Y') }}</a>

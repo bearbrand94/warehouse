@@ -26,7 +26,7 @@ class Item extends Model
     public static function get_item_list(){
         $item_data = DB::table('items')
                 ->join('clients', 'clients.id', '=', 'items.client_id')
-                ->select('items.*', 'clients.name as owned_by')
+                ->select('items.*', 'clients.name as owned_by', 'clients.id as client_id')
                 ->orderBy('updated_at', 'desc');
         return $item_data->get();
     }
@@ -135,13 +135,13 @@ class Item extends Model
             if($item_data->detail[$i]->type == "subtraction"){
                 $sisa += $item_data->detail[$i]->qty;
                 $footer_data = Muat_footer::find($item_data->detail[$i]->ref_id);
-                $item_data->detail[$i]->header_id = "TM".$footer_data->header_id;
+                $item_data->detail[$i]->header_id = $footer_data->header_id;
                 $item_data->detail[$i]->droporder_id = Muat_header::find($footer_data->header_id)->droporder_id;
             }
             else{
                 $sisa -= $item_data->detail[$i]->qty;
                 $footer_data = Bongkar_footer::find($item_data->detail[$i]->ref_id);
-                $item_data->detail[$i]->header_id = "TB".$footer_data->header_id;
+                $item_data->detail[$i]->header_id = $footer_data->header_id;
                 $item_data->detail[$i]->droporder_id = Bongkar_header::find($footer_data->header_id)->droporder_id;
             }        
         }

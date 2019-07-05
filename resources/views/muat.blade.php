@@ -35,12 +35,12 @@
                 </div>
                 <div class="form-group">
                     <label for="truck_number">No. Kendaraan</label>
-                    <input type="text" class="form-control" id="truck_number" name="truck_number" placeholder="Masukkan Nomor Kendaraan" required>
+                    <input type="text" class="form-control" id="truck_number" name="truck_number" placeholder="Masukkan Nomor Kendaraan" value="-"required>
                     <p><span class="text-danger" id="warning_truck_number"></span></p>
                 </div>
                 <div class="form-group">
                     <label for="do_number">No. Surat / DO</label>
-                    <input type="text" class="form-control" id="do_number" name="do_number" placeholder="Diisi Bila Ada" required>
+                    <input type="text" class="form-control" id="do_number" name="do_number" placeholder="Diisi Bila Ada">
                     <p><span class="text-danger" id="warning_do_number"></span></p>
                 </div>
 
@@ -140,6 +140,7 @@
 
 @section('js')
 <script type="text/javascript">
+    
     var item_list = new Array();
     
     function delete_item(index){
