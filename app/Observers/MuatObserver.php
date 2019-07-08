@@ -52,10 +52,9 @@ class MuatObserver
      * @param  \App\Muat_footer  $muatFooter
      * @return void
      */
-    public function deleted(Muat_footer $muatFooter)
+    public function deleting(Muat_footer $muatFooter)
     {
-        $itemlog = Itemlog::where('ref_id', $muatFooter->id)->where('ref_table_name', 'Muat_footer')->first();
-        $itemlog->delete();
+        Itemlog::where('ref_id', $muatFooter->id)->where('ref_table_name', 'Muat_footer')->first()->delete();
     }
 
     /**

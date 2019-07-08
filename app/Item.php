@@ -107,20 +107,6 @@ class Item extends Model
                 ->where('items.id', $item_id)
                 ->first();
 
-        // $bongkar = DB::table('bongkar_footer')
-        //            ->join('bongkar_header', 'bongkar_header.id', '=', 'bongkar_footer.header_id')
-        //            ->select(DB::raw('concat("K", LPAD(bongkar_footer.id, 7, "0")) as id'), 'bongkar_header.droporder_id', 'bongkar_header.delivered_at', 'bongkar_footer.qty', DB::raw('"bongkar" as table_name'), 'bongkar_footer.updated_at')
-        //            ->where('bongkar_footer.item_id', $item_id);
-
-        // $muat = DB::table('muat_footer')
-        //            ->join('muat_header', 'muat_header.id', '=', 'muat_footer.header_id')
-        //            ->select(DB::raw('concat("M", LPAD(muat_footer.id, 7, "0")) as id'), 'muat_header.droporder_id', 'muat_header.delivered_at', 'muat_footer.qty', DB::raw('"muat" as table_name'), 'muat_footer.updated_at')
-        //            ->where('muat_footer.item_id', $item_id)
-        //             ->union($bongkar)
-        //             ->orderby('updated_at', "asc")
-        //             ->get();
-        // $item_data->detail = $muat;
-
         $item_data->detail = DB::table('itemlogs')
             ->join('items', 'items.id', '=', 'itemlogs.item_id')
             ->select('itemlogs.*', 'items.name as item_name')

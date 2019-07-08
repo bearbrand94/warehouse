@@ -40,7 +40,10 @@ Route::post('/bongkar/delete', 'Service\BongkarMuatService@delete_bongkar');
 
 //Muat
 Route::post('/item/muat', 'Service\ItemService@muat');
+Route::post('/muat/edit/bulk', 'Service\ItemService@edit_muat_bulk');
 Route::post('/muat/edit', 'Service\BongkarMuatService@edit_muat');
+
+
 Route::post('/muat/footer/edit', 'Service\BongkarMuatService@edit_muat_footer');
 Route::post('/muat/header/edit', 'Service\BongkarMuatService@edit_muat_header');
 Route::post('/muat/delete', 'Service\BongkarMuatService@delete_muat');

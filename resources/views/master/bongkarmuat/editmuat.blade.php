@@ -25,12 +25,16 @@
         <div class="form-group">
             <input type="hidden" id="edit_index" value="">
             <label for="edit_select_item">Barang</label>
-            <select class="form-control" id="edit_select_item" required>
+            <select class="form-control select_item" id="edit_select_item" required>
                 @foreach($item_data as $item)
-                <option value="{{$item->id}}">{{$item->name}}</option>
+                <option value="{{$item->id}}" data-qty="{{ $item->qty }}">{{$item->name}}</option>
                 @endforeach
             </select>
         </div>
+        <div class="form-group">
+            <label for="edit_item_sisa">Sisa</label>
+            <p class="item_sisa" id="edit_item_sisa"></p>
+        </div>   
         <div class="form-group">
             <label for="edit_item_qty">Jumlah</label>
             <input type="number" class="form-control" id="edit_item_qty" placeholder="Isikan Jumlah Muat." min="1" required>
@@ -42,6 +46,44 @@
         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save_item()">Simpan</button>
       </div>
 
+    </div>
+  </div>
+</div>
+<!-- Add Modal -->
+<div class="modal" id="add-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Item</h4>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-group">
+            <input type="hidden" id="edit_index" value="">
+            <label for="add_select_item">Barang</label>
+            <select class="form-control select_item" id="add_select_item" required>
+                @foreach($item_data as $item)
+                <option value="{{$item->id}}" data-qty="{{ $item->qty }}">{{$item->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="add_item_sisa">Sisa</label>
+            <p class="item_sisa" id="add_item_sisa"></p>
+        </div>          
+        <div class="form-group">
+            <label for="edit_item_qty">Muat</label>
+            <input type="number" class="form-control" id="add_item_qty" placeholder="Isikan Jumlah Muat." min="1" required>
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save_item()">Simpan</button>
+      </div>
     </div>
   </div>
 </div>
@@ -132,24 +174,44 @@
     console.log({!! json_encode($item_data) !!});
     arrFooter=JSON.parse('{!! $muat_data->detail !!}');
 
+    $( ".select_item" ).change(function() {
+        var sisa = $('.select_item').find(':selected').data('qty');
+        $('.item_sisa').html(sisa);
+    });
+
     function save(){
-        var header_id = {{ $muat_data->id }};
-        var delivered_at = $("#delivered_at").val();
-        var droporder_id = $("#droporder_id").val();
-        var truck_number = $("#truck_number").val();
-        console.log(header_id);
-        console.log(delivered_at);
-        console.log(droporder_id);
-        console.log(truck_number);
         console.log(arrFooter);
+        $.ajax(
+        {
+            url: "{{ url('api/muat/edit/bulk') }}",
+            type: 'post', // replaced from put
+            dataType: "JSON",
+            data: {
+                header_id: {{ $muat_data->id }},
+                droporder_id: $("#droporder_id").val(),
+                truck_number: $("#truck_number").val(),
+                delivered_at: $("#delivered_at").val(),
+                muat_footer: JSON.stringify(arrFooter)
+            },
+            success: function (response)
+            {
+                alert('Muat Berhasil.');
+                // window.location.replace("{{ url('/master/muat') }}");
+            },
+            error: function(xhr) {
+                alert(xhr.responseText); // this line will save you tons of hours while debugging
+                console.log(xhr.responseText); 
+            // do something here because of error
+           }
+        });
     }
 
     function edit_item(index){
         $('#edit_index').val(index);
         $('#edit_select_item').val(arrFooter[index].item_id);
         $('#edit_item_qty').val(arrFooter[index].qty);
+        $('.select_item').change();
         $('#edit-modal').modal('show');
-
     }
 
     function save_item(){

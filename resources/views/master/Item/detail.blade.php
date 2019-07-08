@@ -114,8 +114,6 @@
 @section('js')
 
 <script type="text/javascript">
-    console.log({!! json_encode($detail) !!});
-
     var item_table;
     var transaction_table;
 

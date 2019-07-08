@@ -166,6 +166,56 @@ class ItemService extends Controller
         return response()->json(Item::get_client_item($request->client_id));
     }
 
+    public function edit_muat_bulk(Request $request){
+        $muat_header = Muat_header::find($request->header_id);
+        $muat_header->droporder_id = $request->droporder_id ? $request->droporder_id : "-";
+        $muat_header->truck_number = $request->truck_number ? $request->truck_number : "-";
+        $muat_header->delivered_at = date("Y-m-d H:i:s", strtotime($request->delivered_at));
+        $muat_header->save();
+        
+        $footer_data = Muat_footer::where('header_id', $muat_header->id)->get();
+        // return $request->footer_data;
+
+        foreach ($footer_data as $foot) {
+            $footer = Muat_footer::find($foot->id);
+            $footer->delete();
+        }
+
+        foreach (json_decode($request->muat_footer) as $footer) {
+            $muat_footer = new Muat_footer();
+            $muat_footer->item_id = $footer->item_id;
+            $muat_footer->qty = $footer->qty;
+            $muat_footer->header_id = $muat_header->id;
+            $muat_footer->save();
+        }
+        return response()->json(Item::get_client_item($request->client_id));
+    }
+
+    public function edit_bongkar_bulk(Request $request){
+        $bongkar_header = Bongkar_header::find($request->header_id);
+        $bongkar_header->droporder_id = $request->droporder_id ? $request->droporder_id : "-";
+        $bongkar_header->truck_number = $request->truck_number ? $request->truck_number : "-";
+        $bongkar_header->delivered_at = date("Y-m-d H:i:s", strtotime($request->delivered_at));
+        $bongkar_header->save();
+        
+        $footer_data = Bongkar_footer::where('header_id', $bongkar_header->id)->get();
+        // return $request->footer_data;
+
+        foreach ($footer_data as $foot) {
+            $footer = Bongkar_footer::find($foot->id);
+            $footer->delete();
+        }
+        
+        foreach (json_decode($request->bongkar_footer) as $footer) {
+            $bongkar_footer = new Bongkar_footer();
+            $bongkar_footer->item_id = $footer->item_id;
+            $bongkar_footer->qty = $footer->qty;
+            $bongkar_footer->header_id = $bongkar_header->id;
+            $bongkar_footer->save();
+        }
+        return response()->json(Item::get_client_item($request->client_id));
+    }
+
     public function add_new_item(Request $request){
         $this->item_validator($request);
         $item = new Item();
