@@ -55,8 +55,7 @@ class BongkarObserver
      */
     public function deleting(Bongkar_footer $bongkarFooter)
     {
-        $itemlog = Itemlog::where('ref_id', $bongkarFooter->id)->where('ref_table_name', 'Bongkar_footer')->first();
-        $itemlog->delete();
+        Itemlog::where('ref_id', $bongkarFooter->id)->where('ref_table_name', 'Bongkar_footer')->first()->delete();
     }
 
     /**

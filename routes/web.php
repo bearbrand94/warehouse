@@ -39,7 +39,7 @@ Route::get('master/bongkar', 'MasterController@master_bongkarmuat_list');
 Route::get('master/bongkar/edit', 'MasterController@master_bongkar_edit');
 Route::get('master/muat', 'MasterController@master_bongkarmuat_list');
 Route::get('master/muat/edit', 'MasterController@master_muat_edit');
-
+Route::get('master/bongkarmuat', 'MasterController@master_bongkarmuat_list');
 
 
 

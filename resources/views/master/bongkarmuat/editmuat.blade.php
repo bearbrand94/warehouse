@@ -12,7 +12,6 @@
 <div class="modal" id="edit-modal">
   <div class="modal-dialog">
     <div class="modal-content">
-
       <!-- Modal Header -->
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -49,128 +48,100 @@
     </div>
   </div>
 </div>
-<!-- Add Modal -->
-<div class="modal" id="add-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add Item</h4>
-      </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="form-group">
-            <input type="hidden" id="edit_index" value="">
-            <label for="add_select_item">Barang</label>
-            <select class="form-control select_item" id="add_select_item" required>
-                @foreach($item_data as $item)
-                <option value="{{$item->id}}" data-qty="{{ $item->qty }}">{{$item->name}}</option>
-                @endforeach
-            </select>
+<div class="row">
+    <!-- Header Data -->
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+              <h3 class="profile-username text-center">{{$muat_data->owned_by}}</h3>
+
+              <ul class="list-group list-group-unbordered">
+                <div class="form-group">
+                  <label for="client_name">No Invoice: {{$muat_data->showid}}</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="client_name">Tanggal Muat</label>
+                    <input type="text" class="form-control datepicker" placeholder="Isikan Tanggal Muat" id="delivered_at" name="delivered_at" value="{{ \Carbon\Carbon::parse($muat_data->delivered_at)->format('d F Y') }}">
+                    @if($errors->has('droporder_id'))
+                        <p><span class="text-warning">{{$errors->first('delivered_at')}}</span></p>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="client_name">No. DO</label>
+                    <input type="text" class="form-control" id="droporder_id" name="droporder_id" placeholder="Masukkan No. DO" value="{{$muat_data->droporder_id}}">
+                    @if($errors->has('droporder_id'))
+                        <p><span class="text-warning">{{$errors->first('droporder_id')}}</span></p>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="client_name">No. Truck</label>
+                    <input type="text" class="form-control" id="truck_number" name="truck_number" placeholder="Masukkan No. Truck" value="{{$muat_data->truck_number}}">
+                    @if($errors->has('truck_number'))
+                        <p><span class="text-warning">{{$errors->first('truck_number')}}</span></p>
+                    @endif
+                </div>
+
+              </ul>
+            </div>
+            <!-- /.box-body -->
         </div>
-        <div class="form-group">
-            <label for="add_item_sisa">Sisa</label>
-            <p class="item_sisa" id="add_item_sisa"></p>
-        </div>          
-        <div class="form-group">
-            <label for="edit_item_qty">Muat</label>
-            <input type="number" class="form-control" id="add_item_qty" placeholder="Isikan Jumlah Muat." min="1" required>
-        </div>
-      </div>
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="save_item()">Simpan</button>
-      </div>
+        <!-- /.box -->
     </div>
-  </div>
+
+    <!-- Footer Data -->
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Daftar Muat</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <!-- /.box-header -->
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0" id="t_item" style="margin-bottom: 50px;">
+                        <thead id="th_item">
+                          <th>#Item</th>
+                          <th>Nama Barang</th>
+                          <th>Jumlah Muat</th>
+                          <th>Action</th>
+                        </thead>
+                        <tbody id="tb_item">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <!-- /.box-footer -->
+            <div class="box-footer">
+                <!-- /.box-header -->
+                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#edit-modal">Tambah Muat</button>
+            </div>
+            <!-- /.box-footer -->
+        </div>
+    </div>
 </div>
 
-    <div class="row">
-        <!-- Header Data -->
-        <div class="col-md-12">
-            <div class="box box-primary">
-                <div class="box-body box-profile">
-                  <h3 class="profile-username text-center">{{$muat_data->owned_by}}</h3>
+<div class="box">
+    <button class="btn btn-primary pull-right" style="margin: 1em;" onclick="save()">Simpan</button>
+    <button class="btn btn-default pull-right" style="margin-top: 1em;">Batal</button>
+    <button class="btn btn-danger pull-left" style="margin: 1em; display: none">Hapus Semua Data</button>
+</div>
 
-                  <ul class="list-group list-group-unbordered">
-                    <div class="form-group">
-                      <label for="client_name">No Invoice: {{$muat_data->showid}}</label>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="client_name">Tanggal Muat</label>
-                        <input type="text" class="form-control datepicker" placeholder="Isikan Tanggal Muat" id="delivered_at" name="delivered_at" value="{{ \Carbon\Carbon::parse($muat_data->delivered_at)->format('d F Y') }}">
-                        @if($errors->has('droporder_id'))
-                            <p><span class="text-warning">{{$errors->first('delivered_at')}}</span></p>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="client_name">No. DO</label>
-                        <input type="text" class="form-control" id="droporder_id" name="droporder_id" placeholder="Masukkan No. DO" value="{{$muat_data->droporder_id}}">
-                        @if($errors->has('droporder_id'))
-                            <p><span class="text-warning">{{$errors->first('droporder_id')}}</span></p>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label for="client_name">No. Truck</label>
-                        <input type="text" class="form-control" id="truck_number" name="truck_number" placeholder="Masukkan No. Truck" value="{{$muat_data->truck_number}}">
-                        @if($errors->has('truck_number'))
-                            <p><span class="text-warning">{{$errors->first('truck_number')}}</span></p>
-                        @endif
-                    </div>
- 
-                  </ul>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>
-
-        <!-- Footer Data -->
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Daftar Muat</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                    <!-- /.box-tools -->
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <!-- /.box-header -->
-                    <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0" id="t_item" style="margin-bottom: 50px;">
-                            <thead id="th_item">
-                              <th>#Item</th>
-                              <th>Nama Barang</th>
-                              <th>Jumlah Muat</th>
-                              <th>Action</th>
-                            </thead>
-                            <tbody id="tb_item">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- /.box-body -->
-            </div>
-        </div>
-    </div>
-    <button class="pull-right btn-primary" onclick="save()">Simpan</button>
-    <button class="pull-right">Batal</button>
-    <button class="pull-left">Hapus Data</button>
 @stop
 
 @section('js')
-
 <script type="text/javascript">
-    console.log({!! json_encode($muat_data) !!});
+
     console.log({!! json_encode($item_data) !!});
     arrFooter=JSON.parse('{!! $muat_data->detail !!}');
 
@@ -195,8 +166,7 @@
             },
             success: function (response)
             {
-                alert('Muat Berhasil.');
-                // window.location.replace("{{ url('/master/muat') }}");
+                window.location.replace("{{ url('/master/bongkarmuat') }}");
             },
             error: function(xhr) {
                 alert(xhr.responseText); // this line will save you tons of hours while debugging
@@ -215,20 +185,25 @@
     }
 
     function save_item(){
-        var index = $('#edit_index').val();
-        arrFooter[index].item_id = $('#edit_select_item').val();
-        arrFooter[index].item_name = $('#edit_select_item option:selected').text();
-        arrFooter[index].qty = $('#edit_item_qty').val();
-        console.log(arrFooter[index]);
-        populate_item_table();
+        if($('#edit_index').val() == ""){
+            add_item()
+        }
+        else{
+            var index = $('#edit_index').val();
+            arrFooter[index].item_id = $('#edit_select_item').val();
+            arrFooter[index].item_name = $('#edit_select_item option:selected').text();
+            arrFooter[index].qty = $('#edit_item_qty').val();
+            $('#edit_index').val("");
+            populate_item_table();
+        }
+
     }
 
     function add_item(){
         var item = new Object();
-        item.item_id = $('#select_item option:selected').val();
-        item.item_name = $('#select_item option:selected').text();
-        item.qty = $('#item_qty').val();
-        item.note = $("#item_note").val();
+        item.item_id = $('#edit_select_item').val();
+        item.item_name = $('#edit_select_item option:selected').text();
+        item.qty = $('#edit_item_qty').val();
         arrFooter.push(item);
         populate_item_table();
     }
@@ -266,6 +241,7 @@
             todayHighlight: true
         });
         populate_item_table();
+        $( ".select_item" ).change();
     });
 </script>
 @stop

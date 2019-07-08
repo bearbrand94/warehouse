@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Muat_header;
+use App\Muat_footer;
 use App\Itemlog;
 
 class MuatHeaderObserver
@@ -26,10 +27,6 @@ class MuatHeaderObserver
      */
     public function updated(Muat_header $muatHeader)
     {
-        // $cntlog = Itemlog::find(290);
-        // $cntlog->created_at = $muatHeader->delivered_at;
-        // $cntlog->save();
-
         $itemlog = Itemlog::join('Muat_footer', "Muat_footer.id", "=", "Itemlogs.ref_id")
                     ->where('ref_table_name', 'Muat_footer')
                     ->where('Muat_footer.header_id', $muatHeader->id)
@@ -49,7 +46,11 @@ class MuatHeaderObserver
      */
     public function deleted(Muat_header $muatHeader)
     {
-        //
+        $muatFooter = Muat_footer::where('header_id', $muatHeader->id);
+        foreach ($footer_data as $foot) {
+            $footer = Muat_footer::find($foot->id);
+            $footer->delete();
+        }
     }
 
     /**

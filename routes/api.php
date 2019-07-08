@@ -36,6 +36,7 @@ Route::get('/bongkarmuat/get', 'Service\BongkarMuatService@get_bongkarmuat_heade
 //Bongkar
 Route::post('/item/bongkar', 'Service\ItemService@bongkar');
 Route::post('/bongkar/edit', 'Service\BongkarMuatService@edit_bongkar');
+Route::post('/bongkar/edit/bulk', 'Service\ItemService@edit_bongkar_bulk');
 Route::post('/bongkar/delete', 'Service\BongkarMuatService@delete_bongkar');
 
 //Muat
