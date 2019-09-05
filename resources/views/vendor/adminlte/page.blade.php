@@ -4,6 +4,20 @@
     <link rel="stylesheet"
           href="{{ asset('public/vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
     @stack('css')
+    <style type="text/css">
+        .table, .table-bordered{
+            border-color: black;
+        }
+        .table-bordered>thead>tr>th, 
+        .table-bordered>tbody>tr>th,
+        .table-bordered>tfoot>tr>th,
+        .table-bordered>thead>tr>td,
+        .table-bordered>tbody>tr>td,
+        .table-bordered>tfoot>tr>td{
+            border: 0.1px solid black;
+            padding: 8px;
+        }
+    </style>
     @yield('css')
 @stop
 

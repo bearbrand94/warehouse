@@ -43,7 +43,14 @@
     ?>
         <!-- Table row -->
     @foreach ($data->item_data as $item)
-    @if(count($item->items) > 0 || $item->total_sisa > 0)
+    <?php $flag_print=false; ?>
+    @foreach($item->items as $cnt)
+      @if($period_data->period_month == date('m', strtotime($cnt->created_at)))
+        <?php $flag_print=true; ?>
+      @endif
+    @endforeach
+
+    @if($flag_print)
     <div class="page">
       @if($head_cetak == 0)
       <div class="row invoice-info">

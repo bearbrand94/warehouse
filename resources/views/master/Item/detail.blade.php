@@ -7,6 +7,10 @@
     <h1>Detail Barang</h1>
 @stop
 
+@section('css')
+  
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -42,8 +46,9 @@
             <div class="tab-content">
               <div class="active tab-pane" id="item">
                 <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0" id="t_item">
+                    <table class="table table-bordered" width="100%" cellspacing="0" id="t_item" style="border-color: black;">
                         <thead id="th_item">
+                          <th>No.</th>
                           <th>#BongkarMuat</th>
                           <th>Tanggal</th>
                           <th class="text-center">Bongkar</th>
@@ -51,6 +56,7 @@
                           <th class="text-center">Sisa</th>
                         </thead>
                         <tbody>
+                          <?php $cnt = count($item->detail); ?>
                           <?php $t_item_sisa = $item->qty; ?>
                           <?php $t_item_bongkar = 0; ?>
                           <?php $t_item_muat = 0; ?>
@@ -58,6 +64,9 @@
                           @foreach ($item->detail as $detail)
                             <?php $type = $detail->note ?>
                           <tr>
+                            <td>
+                              {{ $cnt }}
+                            </td>
                             <td>
                               @if($type == "bongkar")
                                 <a href="{{ url("master/bongkar/edit?id=").$detail->header_id }}">{{ $detail->header_id }}</a>
@@ -89,14 +98,17 @@
                             <?php $t_item_sisa -= $detail->qty; $t_item_bongkar += $detail->qty ?>
                             @endif
                           </tr>
+                          <?php $cnt--; ?>
                           @endforeach
                         </tbody>
                         <tfoot>
                           <tr>
-                            <td></td><td></td>
+                            <td></td><td></td><td></td>
                             <td class="text-center"><label>{{$t_item_bongkar}}</label></td>
                             <td class="text-center"><label>{{$t_item_muat}}</label></td>
-                            <td class="text-center"><label>01 Maret 2019 = {{$t_item_sisa}}</label></td>
+                            <td class="text-center">
+                              <label>01 Maret 2019 = {{$t_item_sisa}}</label>
+                            </td>
                           </tr>
                         </tfoot>
                     </table>
@@ -125,7 +137,7 @@
     $(document).ready(function() {
       item_table = $('#t_item').DataTable({
         "pageLength": 50,
-         "order": [[ 1, "asc" ]]
+         "order": [[ 0, "asc" ]]
       });
     });
 </script>

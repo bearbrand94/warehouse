@@ -24,7 +24,7 @@
         <div class="form-group">
             <input type="hidden" id="edit_index" value="">
             <label for="edit_select_item">Barang</label>
-            <select class="form-control select_item" id="edit_select_item" required>
+            <select class="form-control select_item" id="edit_select_item" required style="width: 100%">
                 @foreach($item_data as $item)
                 <option value="{{$item->id}}" data-qty="{{ $item->qty }}">{{$item->name}}</option>
                 @endforeach
@@ -165,7 +165,7 @@
             },
             success: function (response)
             {
-                window.location.replace("{{ url('/master/bongkarmuat') }}");
+                window.location.replace("{{ url('/master/item') }}");
             },
             error: function(xhr) {
                 alert(xhr.responseText); // this line will save you tons of hours while debugging
@@ -241,6 +241,10 @@
         });
         populate_item_table();
         $( ".select_item" ).change();
+        $('.select_item').select2({
+            placeholder: 'Select an option',
+            allowClear: true
+        })
     });
 </script>
 @stop
